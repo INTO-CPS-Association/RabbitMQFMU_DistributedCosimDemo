@@ -1,0 +1,8 @@
+{
+    "fmus": {
+      "{controller}": "/fmus/rmq_controller/rmqfmuv2.1.5",
+      "{MassSpringDamper1}": "/fmus/MassSpringDamper1.fmu"
+    },
+    "connections": {},
+    "parameters": {}
+}

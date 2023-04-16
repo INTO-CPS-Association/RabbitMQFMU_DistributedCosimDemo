@@ -1,0 +1,4 @@
+cd();
+loadFile(cd() + "/controller.mo");
+translateModelFMU(controller, version="2.0", fmuType="me_cs");
+buildModelFMU(controller, version="2.0", fmuType="me_cs");

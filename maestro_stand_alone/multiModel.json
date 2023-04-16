@@ -1,7 +1,7 @@
 {
     "fmus": {
-      "{controller}": "file:///C:/Data/Activities/Presentations/2023/DLTE_DistributedCosimDemo/fmus/controller.fmu",
-      "{msd}": "file:///C:/Data/Activities/Presentations/2023/DLTE_DistributedCosimDemo/fmus/msd.fmu"
+      "{controller}": "/fmus/controller.fmu",
+      "{msd}": "/fmus/msd.fmu"
     },
     "connections": {},
     "parameters": {}

@@ -1,0 +1,4 @@
+/distributed_oneway/results
+maestro.jar
+*.log
+/maestro_stand_alone/results

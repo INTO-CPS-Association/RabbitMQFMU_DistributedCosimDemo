@@ -8,22 +8,23 @@
    5. `python .\consume.py`
    6. `python .\publish.py`
 5. Export FMUs for linux machines.
-   1. `docker build -t om:latest .`
-   2. `$env:DISPLAY=":0"`
-   3. `docker container run --rm --name om-container -v C:\Data\Activities\Presentations\2023\DLTE_DistributedCosimDemo\models:/models -w /models -it om:latest /bin/bash`
-   4. `docker container run -it --rm --name om-container -v C:\Data\Activities\Presentations\2023\DLTE_DistributedCosimDemo\models:/models -w /models om:latest OMEdit`
+   1. Use OpenModelica from a linux machine, or use [Linux Subsystem for Windows](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps) 
+   2. Open models and export them as FMUs.
 6. Run standalone cosim
    1. CD to [maestro_stand_alone](./maestro_stand_alone)
-   2. `java -jar maestro.jar sigver generate-algorithm scenario.conf -output results`
-   3. `java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2`
+   2. `docker build -t maestro:latest .`
+   3. `cd ..`
+   4. `docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash`
+      1. `java -jar maestro.jar sigver generate-algorithm scenario.conf -output results`
+      2. `java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2`
 7. Start controller python running in local machine.
    1. CD to [distributed_ctrl_python](./distributed_ctrl_python)
    2. `python .\control.py`
 8. Start distributed_oneway
    1. CD to [distributed_oneway](./distributed_oneway)
-   2. `docker build -t maestro:latest .`
+   2. `docker build -t rabbitmqfmu:latest .`
    3. `cd ..`
-   4. `docker container run --rm --name maestro-container -v ${pwd}\distributed_oneway:/distributed_oneway -v ${pwd}\fmus:/fmus -w /distributed_oneway --network=examplenetwork  -it maestro:latest /bin/bash`
+   4. `docker container run --rm --name rabbitmqfmu-container -v ${pwd}\distributed_oneway:/distributed_oneway -v ${pwd}\fmus:/fmus -w /distributed_oneway --network=examplenetwork  -it rabbitmqfmu:latest /bin/bash`
       1. `java -jar maestro.jar sigver generate-algorithm scenario.conf -output results`
       2. `java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2`
 

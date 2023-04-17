@@ -4,7 +4,7 @@ import json
 from datetime import datetime as dt
 import datetime
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('172.20.0.2'))
 channel = connection.channel()
 
 print("Declaring exchange")
@@ -28,7 +28,7 @@ def control_loop(ch, method, properties, body):
 
   msg = {}
   msg['time'] = dt.now(tz = utc_tz).isoformat(timespec='milliseconds')
-  msg['fk'] = -1.0
+  msg['fk'] = 1.0
 
   if "timestep" in msg_in:
     msg['time'] = msg_in["timestep"]

@@ -1,0 +1,58 @@
+version: '3.0'
+
+services:
+
+  rabbitmq:
+    build : ./rabbitmqserver/
+    container_name: rabbitmq-container
+    image: rabbitmq
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 1883:1883
+    networks:
+      examplenetwork: 
+        ipv4_address: 172.20.0.2
+
+  controller:
+    build : ./distributed_ctrl_python/
+    container_name: controller-container
+    image: controller
+    working_dir: /distributed_ctrl_python
+    volumes:
+      - ./distributed_ctrl_python:/distributed_ctrl_python
+    depends_on:
+      rabbitmq:
+        condition: service_healthy # Makes sure this container only starts with healthcheck in rabbitmq-container is returning OK. 
+    networks:
+      examplenetwork: 
+        ipv4_address: 172.20.0.3
+
+  maestro:
+    build : ./distributed_oneway/
+    container_name: rabbitmqfmu-container
+    image: rabbitmqfmu
+    working_dir: /distributed_oneway
+    volumes:
+      - ./distributed_oneway:/distributed_oneway
+      - ./fmus:/fmus
+    depends_on:
+      rabbitmq:
+        condition: service_healthy # Makes sure this container only starts with healthcheck in rabbitmq-container is returning OK. 
+      controller:
+        condition: service_started
+    networks:
+      examplenetwork: 
+        ipv4_address: 172.20.0.4
+
+networks:
+  examplenetwork: 
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/16"

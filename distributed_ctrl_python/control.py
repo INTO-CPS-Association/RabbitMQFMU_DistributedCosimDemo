@@ -4,7 +4,18 @@ import json
 from datetime import datetime as dt
 import datetime
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('172.20.0.2'))
+import ssl
+import pika
+
+# SSL Context for TLS configuration of Amazon MQ for RabbitMQ
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+ssl_context.set_ciphers('ECDHE+AESGCM:!ECDSA')
+
+url = f""
+parameters = pika.URLParameters(url)
+parameters.ssl_options = pika.SSLOptions(context=ssl_context)
+
+connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
 print("Declaring exchange")
@@ -32,7 +43,7 @@ def control_loop(ch, method, properties, body):
 
   if "timestep" in msg_in:
     msg['time'] = msg_in["timestep"]
-  
+
   channel.basic_publish(exchange='example_exchange', routing_key='controller', body=json.dumps(msg))
   print("Sent:")
   print(msg)

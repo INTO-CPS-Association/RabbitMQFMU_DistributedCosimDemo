@@ -16,16 +16,16 @@
     <ModelVariables>
 
         <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter" initial="exact">
-            <String start="172.20.0.2"/>
+            <String start=""/>
         </ScalarVariable>
         <ScalarVariable name="config.port" valueReference="1" variability="fixed" causality="parameter" initial="exact">
-            <Integer start="5672"/>
+            <Integer start=""/>
         </ScalarVariable>
         <ScalarVariable name="config.username" valueReference="2" variability="fixed" causality="parameter" initial="exact">
-            <String start="guest"/>
+            <String start=""/>
         </ScalarVariable>
         <ScalarVariable name="config.password" valueReference="3" variability="fixed" causality="parameter" initial="exact">
-            <String start="guest"/>
+            <String start=""/>
         </ScalarVariable>
 
 
@@ -60,10 +60,10 @@
         <ScalarVariable name="config.routingkey.from_cosim" valueReference="13" variability="fixed" causality="parameter" initial="exact">
             <String start="msd"/>
         </ScalarVariable>
-        
+
 
         <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
-            <Boolean start="false"/>
+            <Boolean start="1"/>
         </ScalarVariable>
         <ScalarVariable name="config.queueupperbound" valueReference="17" variability="fixed" causality="parameter" initial="exact">
             <Integer start="100"/>
@@ -71,10 +71,10 @@
 
         <ScalarVariable name="x" valueReference="20" variability="continuous" causality="input">
             <Real start="0" />
-        </ScalarVariable> 
+        </ScalarVariable>
         <ScalarVariable name="fk" valueReference="21" variability="continuous" causality="output">
             <Real />
-        </ScalarVariable> 
+        </ScalarVariable>
 
     </ModelVariables>
     <ModelStructure>

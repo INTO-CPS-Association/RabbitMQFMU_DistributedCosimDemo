@@ -2,6 +2,7 @@ version: '3.0'
 
 services:
 
+  # Uncomment for using local rabbitmqserver
   # rabbitmq:
   #   build : ./rabbitmqserver/
   #   container_name: rabbitmq-container
@@ -27,6 +28,7 @@ services:
     volumes:
       - ./distributed_ctrl_python:/distributed_ctrl_python
     network_mode: "host"
+    # Uncomment for using local rabbitmqserver
     # depends_on:
     #   rabbitmq:
     #     condition: service_healthy # Makes sure this container only starts with healthcheck in rabbitmq-container is returning OK.
@@ -44,14 +46,16 @@ services:
       - ./fmus:/fmus
     network_mode: "host"
     depends_on:
-    #   rabbitmq:
-    #     condition: service_healthy # Makes sure this container only starts with healthcheck in rabbitmq-container is returning OK.
       controller:
         condition: service_started
+    # Uncomment for using local rabbitmqserver
+    #   rabbitmq:
+    #     condition: service_healthy # Makes sure this container only starts with healthcheck in rabbitmq-container is returning OK.
     # networks:
     #   examplenetwork:
     #     ipv4_address: 172.20.0.4
 
+# Uncomment for using local rabbitmqserver
 # networks:
 #   examplenetwork:
 #     ipam:

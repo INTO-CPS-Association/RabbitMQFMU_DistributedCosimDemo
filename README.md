@@ -1,6 +1,7 @@
 Instructions Using Docker-Compose:
 1. Install Docker Desktop or equivalent for your platform.
-2. `docker-compose up` -> Starts all services and runs the distributed cosim
+2. Contact Claudio <claudio.gomes@ece.au.dk> for access to rabbitqm on AWS. You will get a password.
+3. `docker-compose up` -> Starts all services
    1. Wait for all services to be up and running.
    2. Open terminal for controller-container: 
       1. `docker exec -it controller-container /bin/bash`
@@ -9,7 +10,7 @@ Instructions Using Docker-Compose:
       1. `docker exec -it rabbitmqfmu-container /bin/bash`
       2. `./run_cosim.sh`
    4. Exit all the above terminals.
-3. `docker-compose down` -> Removes all containers
+4. `docker-compose down` -> Removes all containers
 
 
 Instructions that do not use Docker-Compose (useful for troubleshooting the virtual machines individually):

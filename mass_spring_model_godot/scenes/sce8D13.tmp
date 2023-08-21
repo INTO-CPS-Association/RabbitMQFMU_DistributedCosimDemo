@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://c7wwmvh8j4vde"]
+
+[ext_resource type="PackedScene" uid="uid://mkf1x0isvdgh" path="res://scenes/spring.tscn" id="1_0qx2j"]
+[ext_resource type="PackedScene" uid="uid://bh55v6lb15rvx" path="res://scenes/damper.tscn" id="2_iipxc"]
+[ext_resource type="Script" path="res://scripts/Mass.gd" id="3_avptt"]
+[ext_resource type="Script" path="res://scenes/Camera3D.gd" id="3_yxpv1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffduc"]
+size = Vector3(8, 12, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6u768"]
+albedo_color = Color(0.458824, 0.858824, 0.811765, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hkt6h"]
+size = Vector3(8, 12, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ribyy"]
+albedo_color = Color(0.533333, 0.533333, 0.533333, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wafs7"]
+size = Vector3(10, 15, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2twk8"]
+size = Vector3(10, 15, 1.5)
+
+[node name="Scene3D" type="Node3D"]
+
+[node name="Spring" parent="." instance=ExtResource("1_0qx2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.76901, -13.204)
+
+[node name="k" type="Label3D" parent="Spring"]
+transform = Transform3D(-0.0381785, 0, 0.999271, 0, 1, 0, -0.999271, 0, -0.0381785, 0.0489888, 3.93323, 0.156515)
+pixel_size = 0.1
+text = "k"
+
+[node name="Damper" parent="." instance=ExtResource("2_iipxc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.33627, -12.7908)
+
+[node name="c" type="Label3D" parent="Damper"]
+transform = Transform3D(-0.0381785, 0, 0.999271, 0, 1, 0, -0.999271, 0, -0.0381785, 0.0489888, 2.73937, -0.256685)
+pixel_size = 0.1
+text = "c
+"
+
+[node name="Mass" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.46)
+script = ExtResource("3_avptt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mass"]
+shape = SubResource("BoxShape3D_ffduc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mass"]
+material_override = SubResource("StandardMaterial3D_6u768")
+mesh = SubResource("BoxMesh_hkt6h")
+skeleton = NodePath("")
+
+[node name="m" type="Label3D" parent="Mass"]
+transform = Transform3D(-0.0381785, 0, 0.999271, 0, 1, 0, -0.999271, 0, -0.0381785, 4.226, 0.707, 0)
+pixel_size = 0.1
+text = "m"
+
+[node name="RayCast3D" type="RayCast3D" parent="Mass"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29.46)
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(0.99996, -0.00890106, 0, 0.00890106, 0.99996, 0, 0, 0, 1, 0, 0, -1.38705)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
+material_override = SubResource("StandardMaterial3D_ribyy")
+mesh = SubResource("BoxMesh_wafs7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(0.998801, 0, 0, 0, 0.998801, 0, 0, 0, 0.998801, 0, 0, -0.265702)
+shape = SubResource("BoxShape3D_2twk8")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.0567926, -0.413422, 0.908767, 0.0257862, 0.910539, 0.412617, -0.998053, 0, 0.0623725, 36.2583, 16.1729, -11.812)
+script = ExtResource("3_yxpv1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.821687, -0.569939, -4.55358e-09, 0.069932, -0.100822, 0.992444, -0.565633, 0.815478, 0.122701, 1.99446, 16.5673, -16.7649)
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.00383723, -0.146186, 0.98925, 0.824648, 0.560023, 0.0795584, -0.565633, 0.815478, 0.122701, 24.7405, 14.1974, -3.89966)

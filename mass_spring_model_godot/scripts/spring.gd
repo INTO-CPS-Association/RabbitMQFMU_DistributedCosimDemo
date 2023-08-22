@@ -4,6 +4,7 @@ var coordinate = 0
 
 var moving_left = false
 var moving_right = false
+var initial_length = scale.z
 
 func _on_mass_is_moving_right(coord):
 	moving_right = true
@@ -21,10 +22,10 @@ func _on_mass_stop_moving():
 	
 func _process(_delta):
 	if moving_right:
-		scale.z += coordinate*-0.05
+		scale.z = initial_length * coordinate
 		moving_right = false
 	elif moving_left:
-		scale.z -= coordinate*0.045
+		scale.z = initial_length * -coordinate
 		moving_left = false
 	else:
 		scale.z += 0

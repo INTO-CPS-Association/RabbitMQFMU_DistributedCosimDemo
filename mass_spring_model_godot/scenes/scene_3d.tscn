@@ -1,18 +1,18 @@
 [gd_scene load_steps=11 format=3 uid="uid://c7wwmvh8j4vde"]
 
 [ext_resource type="Script" path="res://scripts/RabbitMQConnection.cs" id="1_tr0c3"]
+[ext_resource type="PackedScene" uid="uid://cx6pbq1gd1qf4" path="res://assets/spring2.tscn" id="2_y2ihj"]
 [ext_resource type="Script" path="res://scripts/Mass.gd" id="3_avptt"]
 [ext_resource type="Script" path="res://scripts/spring.gd" id="3_jm5o0"]
-[ext_resource type="PackedScene" uid="uid://ccv6kjwgy14vc" path="res://assets/spring.tscn" id="7_1ubri"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ffduc"]
-size = Vector3(8, 12, 12)
+size = Vector3(4, 6, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6u768"]
 albedo_color = Color(0.458824, 0.858824, 0.811765, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hkt6h"]
-size = Vector3(8, 12, 12)
+size = Vector3(4, 6, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ribyy"]
 albedo_color = Color(0.533333, 0.533333, 0.533333, 1)
@@ -26,52 +26,44 @@ size = Vector3(10, 15, 1.5)
 [node name="Scene3D" type="Node3D"]
 script = ExtResource("1_tr0c3")
 
-[node name="Spring" parent="." instance=ExtResource("7_1ubri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.436639, -2.91387)
+[node name="Spring2" parent="." instance=ExtResource("2_y2ihj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.3333)
 script = ExtResource("3_jm5o0")
 
-[node name="k" type="Label3D" parent="."]
-transform = Transform3D(-0.0381785, 0, 0.999271, 0, 1, 0, -0.999271, 0, -0.0381785, 0.0489888, 3.98111, -12.8665)
-pixel_size = 0.1
-text = "k"
-
 [node name="Mass" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.777788, -29.46)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.700512, -0.64018, -25.3181)
 script = ExtResource("3_avptt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mass"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.778, 10.3803)
 shape = SubResource("BoxShape3D_ffduc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Mass"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.494573, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.778, 10.3334)
 material_override = SubResource("StandardMaterial3D_6u768")
 mesh = SubResource("BoxMesh_hkt6h")
 skeleton = NodePath("")
 
-[node name="m" type="Label3D" parent="Mass/MeshInstance3D"]
-transform = Transform3D(-0.0381785, 0, 0.999271, 0, 1, 0, -0.999271, 0, -0.0381785, 4.226, 0.707, 0)
-pixel_size = 0.1
-text = "m"
-
 [node name="Wall" type="StaticBody3D" parent="."]
-transform = Transform3D(0.99996, -0.00890106, 0, 0.00890106, 0.99996, 0, 0, 0, 1, 0, 0, -1.38705)
+transform = Transform3D(0.99996, -0.00890106, 0, 0.00890106, 0.99996, 0, 0, 0, 1, 0, 0, 3.42275)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(1, -3.72529e-09, 0, 3.72529e-09, 1, 0, 0, 0, 1, 0, 0, 9.99966)
 material_override = SubResource("StandardMaterial3D_ribyy")
 mesh = SubResource("BoxMesh_wafs7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(0.998801, 0, 0, 0, 0.998801, 0, 0, 0, 0.998801, 0, 0, -0.265702)
+transform = Transform3D(0.998803, 3.72529e-09, 0, -3.72529e-09, 0.998803, 0, 0, 0, 0.998801, 0, 0, 10.1838)
 shape = SubResource("BoxShape3D_2twk8")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.0567926, -0.413422, 0.908767, 0.0257862, 0.91054, 0.412617, -0.998053, 2.98605e-08, 0.0623725, 36.2583, 16.1729, -11.812)
+transform = Transform3D(0.0567926, -0.413422, 0.908767, 0.0257862, 0.91054, 0.412617, -0.998053, 5.97209e-08, 0.0623725, 35.0541, 11.3626, -6.99505)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.821687, -0.569939, -4.55358e-09, 0.069932, -0.100822, 0.992444, -0.565633, 0.815478, 0.122701, 1.99446, 16.5673, -16.7649)
+transform = Transform3D(-0.821687, -0.569939, -2.41751e-07, 0.069932, -0.100822, 0.992444, -0.565633, 0.815478, 0.122701, 1.99446, 16.5673, -6.31538)
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.00383723, -0.146186, 0.98925, 0.824648, 0.560023, 0.0795584, -0.565633, 0.815478, 0.122701, 24.7405, 14.1974, -3.89966)
+transform = Transform3D(0.00383723, -0.146186, 0.98925, 0.824648, 0.560023, 0.0795584, -0.565633, 0.815478, 0.122701, 24.7405, 14.1974, 6.54986)
 
 [node name="msgLabel" type="RichTextLabel" parent="."]
 offset_left = 14.0
@@ -81,6 +73,6 @@ offset_bottom = 185.0
 theme_override_font_sizes/normal_font_size = 30
 
 [connection signal="PositionMessage" from="." to="Mass" method="_on_position_message"]
-[connection signal="is_moving_left" from="Mass" to="Spring" method="_on_mass_is_moving_left"]
-[connection signal="is_moving_right" from="Mass" to="Spring" method="_on_mass_is_moving_right"]
-[connection signal="stop_moving" from="Mass" to="Spring" method="_on_mass_stop_moving"]
+[connection signal="is_moving_left" from="Mass" to="Spring2" method="_on_mass_is_moving_left"]
+[connection signal="is_moving_right" from="Mass" to="Spring2" method="_on_mass_is_moving_right"]
+[connection signal="stop_moving" from="Mass" to="Spring2" method="_on_mass_stop_moving"]

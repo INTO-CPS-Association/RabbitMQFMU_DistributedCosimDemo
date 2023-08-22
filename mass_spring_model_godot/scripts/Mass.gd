@@ -8,7 +8,7 @@ signal stop_moving
 
 var got_message = false
 var same_position = false
-var coord = []
+var coord = 0.0
 var t = 0.0
 var new_pos : Vector3
 
@@ -18,10 +18,10 @@ func _physics_process(_delta):
 		position = position.lerp(new_pos, t)
 		
 		if !same_position:
-			if float(coord[2]) < 0: 
-				emit_signal("is_moving_right", coord[2])
-			elif float(coord[2]) > 0:
-				emit_signal("is_moving_left", coord[2])
+			if float(coord) >= 0.3: 
+				emit_signal("is_moving_right", coord)
+			elif float(coord) < 0.3:
+				emit_signal("is_moving_left", coord)
 			else:
 				emit_signal("stop_moving")
 		
@@ -31,6 +31,6 @@ func _on_position_message(coordinates):
 	got_message = true
 	same_position = false
 	coord = coordinates
-	new_pos = Vector3(position.x + float(coord[0]), 
-					  position.y + float(coord[1]), 
-					  position.z + float(coord[2]))
+	new_pos = Vector3(position.x + 0, 
+					  position.y + 0, 
+					  coord * 25)

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx6pbq1gd1qf4"]
+
+[ext_resource type="ArrayMesh" uid="uid://dfv2wnfw66mvm" path="res://sprites/spring7.tres" id="1_q2b4q"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kkgy0"]
+height = 24.0
+radius = 1.3
+
+[node name="Spring" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -12.0433)
+shape = SubResource("CylinderShape3D_kkgy0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -0.475148)
+mesh = ExtResource("1_q2b4q")

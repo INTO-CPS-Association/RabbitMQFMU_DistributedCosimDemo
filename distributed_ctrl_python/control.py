@@ -49,9 +49,13 @@ def control_loop(ch, method, properties, body):
 
   if "simstep" in msg_in:
     simstep = float(msg_in["simstep"])
-    if simstep > 5.0:
+    if simstep > 15000:
       msg['fk'] = 2.0
-
+    elif simstep > 30000:
+      msg['fk'] = 1.0
+    elif simstep > 50000:
+      msg['fk'] = 0.5
+  
   channel.basic_publish(exchange='example_exchange', routing_key='controller', body=json.dumps(msg))
   print("Sent:")
   print(msg)

@@ -1,0 +1,28 @@
+{
+    "fmus": {
+        "{controller}": "/fmus/rmq_controller/rmqfmuv2.1.5",
+        "{msd}": "/fmus/msd.fmu"
+    },
+    "connections": {
+        "{controller}.c.fk": [
+            "{msd}.m.fk"
+        ],
+        "{msd}.m.x": [
+            "{controller}.c.x"
+        ]
+    },
+    "parameters": {},
+    "logVariables": {},
+    "algorithm":{
+        "type":"fixed-step",
+        "size":0.01
+    },
+    "loggingOn": true,
+    "overrideLogLevel": "DEBUG",
+    "convergenceRelativeTolerance": 0.01,
+    "convergenceAbsoluteTolerance": 0.0,
+    "convergenceAttempts": 5,
+    "startTime": 0.0,
+    "endTime": 10.0,
+    "simulationProgramDelay": true
+}

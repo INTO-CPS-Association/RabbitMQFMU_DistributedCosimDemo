@@ -1,8 +1,0 @@
-{
-    "fmus": {
-      "{controller}": "/fmus/rmq_controller/rmqfmuv2.1.5",
-      "{msd}": "/fmus/msd.fmu"
-    },
-    "connections": {},
-    "parameters": {}
-}

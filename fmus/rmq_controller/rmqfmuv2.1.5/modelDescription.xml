@@ -63,7 +63,7 @@
 
 
         <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
-            <Boolean start="1"/>
+            <Boolean start="true"/>
         </ScalarVariable>
         <ScalarVariable name="config.queueupperbound" valueReference="17" variability="fixed" causality="parameter" initial="exact">
             <Integer start="100"/>

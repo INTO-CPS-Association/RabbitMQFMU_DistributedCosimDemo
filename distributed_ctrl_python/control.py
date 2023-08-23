@@ -45,6 +45,7 @@ def control_loop(ch, method, properties, body):
 
   if "timestep" in msg_in:
     msg['time'] = msg_in["timestep"]
+    print(msg_in["timestep"])
 
   channel.basic_publish(exchange='example_exchange', routing_key='controller', body=json.dumps(msg))
   print("Sent:")

@@ -47,6 +47,11 @@ def control_loop(ch, method, properties, body):
     msg['time'] = msg_in["timestep"]
     print(msg_in["timestep"])
 
+  if "simstep" in msg_in:
+    simstep = float(msg_in["simstep"])
+    if simstep > 5.0:
+      msg['fk'] = 2.0
+
   channel.basic_publish(exchange='example_exchange', routing_key='controller', body=json.dumps(msg))
   print("Sent:")
   print(msg)

@@ -18,9 +18,9 @@ func _physics_process(_delta):
 		position = position.lerp(new_pos, t)
 		
 		if !same_position:
-			if float(coord) >= 0.3: 
+			if float(coord) >= 0.15: 
 				emit_signal("is_moving_right", coord)
-			elif float(coord) < 0.3:
+			elif float(coord) < 0.15:
 				emit_signal("is_moving_left", coord)
 			else:
 				emit_signal("stop_moving")

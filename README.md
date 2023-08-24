@@ -30,9 +30,8 @@ Instructions that do not use Docker-Compose (useful for troubleshooting the virt
    1. CD to [maestro_stand_alone](./maestro_stand_alone)
    2. `docker build -t maestro:latest .`
    3. `cd ..`
-   4. `docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash`
-      1. `java -jar maestro.jar sigver generate-algorithm scenario.conf -output results`
-      2. `java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2`
+   4. Start container terminal: `docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash`
+   5. Then inside container terminal: `java -jar maestro.jar import Sg1 -output=results -v --interpret scenario.json`
 6. Run distributed scenario:
    1. Make sure rabbitmq-server container is running (see previous step)
    2. Start controller python running in local machine.

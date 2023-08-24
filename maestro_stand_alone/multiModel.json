@@ -1,8 +1,0 @@
-{
-    "fmus": {
-      "{controller}": "/fmus/controller.fmu",
-      "{msd}": "/fmus/msd.fmu"
-    },
-    "connections": {},
-    "parameters": {}
-}

@@ -27,7 +27,6 @@ public partial class RabbitMQConnection : Node3D
             Version = SslProtocols.Tls12,
         },
         UserName = "distributed_cosim_demo",
-        Password = "",  // Remember to add/remove password
         Port = 5671,
         Uri = new Uri("amqps://b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com")
     };
@@ -49,9 +48,26 @@ public partial class RabbitMQConnection : Node3D
     /// Creates a connection to server. Creates an exchange and queue, binds them, and calls ReceiveMessage()
     /// </summary>
     public override void _Ready() {
-        connection = factory.CreateConnection();
-        channel = connection.CreateModel();
-        GD.Print("Connection created");
+        string[] args = OS.GetCmdlineArgs();
+
+        // Get password from command line argument
+        if (args.Length == 1) {
+            factory.Password = args[0];
+        }
+        else {
+            GetTree().Quit();
+            throw new Exception("Password not provided");
+        }
+        
+        try {
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+            GD.Print("Connection created");
+        }
+        catch (Exception) {
+            GetTree().Quit();
+            throw new Exception("Connection failed");
+        }
 
         localQueue = channel.QueueDeclare(autoDelete: true, exclusive: true);
         channel.QueueBind(queue: localQueue, exchange: exchangeName, routingKey: bindingKey);
@@ -74,7 +90,7 @@ public partial class RabbitMQConnection : Node3D
     /// Receives messages from the queue and adds them to the messages list.
     /// </summary>
     private void ReceiveMessage() {
-        GD.Print($"Waiting for messages on exchange: {exchangeName}, queue: {localQueue}, binding key: {bindingKey}");
+        GD.Print("Waiting for messages");
         var consumer = new EventingBasicConsumer(channel);
 
         consumer.Received += (model, ea) => {

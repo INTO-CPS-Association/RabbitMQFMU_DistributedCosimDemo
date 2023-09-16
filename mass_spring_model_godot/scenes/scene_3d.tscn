@@ -73,6 +73,4 @@ offset_bottom = 185.0
 theme_override_font_sizes/normal_font_size = 30
 
 [connection signal="PositionMessage" from="." to="Mass" method="_on_position_message"]
-[connection signal="is_moving_left" from="Mass" to="Spring" method="_on_mass_is_moving_left"]
-[connection signal="is_moving_right" from="Mass" to="Spring" method="_on_mass_is_moving_right"]
-[connection signal="stop_moving" from="Mass" to="Spring" method="_on_mass_stop_moving"]
+[connection signal="is_moving" from="Mass" to="Spring" method="_on_is_moving"]

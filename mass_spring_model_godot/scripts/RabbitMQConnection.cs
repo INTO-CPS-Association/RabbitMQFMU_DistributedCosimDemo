@@ -74,7 +74,7 @@ public partial class RabbitMQConnection : Node3D
     /// Receives messages from the queue and adds them to the messages list.
     /// </summary>
     private void ReceiveMessage() {
-        GD.Print("Waiting for messages");
+        GD.Print($"Waiting for messages on exchange: {exchangeName}, queue: {localQueue}, binding key: {bindingKey}");
         var consumer = new EventingBasicConsumer(channel);
 
         consumer.Received += (model, ea) => {

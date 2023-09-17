@@ -18,7 +18,7 @@
     PowerShell execution policy is required to be one of: `Unrestricted`, `RemoteSigned` or `ByPass` to execute the installer. For example, run:
 
     ```powershell
-    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     ```
    Run to install Scoop:
     ```powershell
@@ -75,4 +75,4 @@ ERROR: Condition "!EditorSettings::get_singleton() || !EditorSettings::get_singl
 godot-mono [password]
 ```
 
-Contant Claudio claudio.gomes@ece.au.dk for the password to get access to RabbitMQ on AWS. No argument or wrong password will fail.
+Contact Claudio claudio.gomes@ece.au.dk for the password to get access to RabbitMQ on AWS. No argument or wrong password will fail.

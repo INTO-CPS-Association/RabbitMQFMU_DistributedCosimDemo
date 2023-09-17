@@ -24,7 +24,7 @@ In the following instructions whenever we ask to run a particular command it mea
 5. Open another terminal and run the following to connect to the controller-container 
    1. `docker exec -it controller-container /bin/bash`
    2. `python3 control.py`
-6. (Optional) If you wish to visualize the 3D example, follow the [Godot instructions](mass_spring_model_godot/README.md) and start the [Godot project](mass_spring_model_godot/project.godot).
+6. (Optional) If you wish to visualize the 3D example, follow the [Godot instructions](mass_spring_model_godot/README.md) and run the [Godot project](mass_spring_model_godot/project.godot).
 7. Open another terminal and run the following to connect to the rabbitmqfmu-container
    1. `docker exec -it rabbitmqfmu-container /bin/bash`
    2. `./run_cosim.sh`
@@ -46,6 +46,9 @@ In the following instructions whenever we ask to run a particular command it mea
    Sent:
    {'time': '2023-09-17T07:40:41.387+00:00', 'fk': 1.0}
    ```
+
+   godot project:
+   ![](assets/20230917102415.png)
 
    run_cosim.sh
    ```

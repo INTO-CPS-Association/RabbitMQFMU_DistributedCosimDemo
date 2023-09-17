@@ -37,42 +37,17 @@
 
 ## Build and Run the Godot Project
 
-### Build the Godot Project 
-This is only required before running the Godot Project the first time. 
+### Build and Run the Godot Project with UI
+
+**Prerequisites:**
+* C# Library RabbitMQ.Client
+* A running Local RabbitMQ Server
 
 **Steps:**
-1. Open a PowerShell terminal.
-2. Change directory to the Godot Project `mass_spring_model_godot`:
-   ```powershell
-   cd [YOUR PATH]\mass_spring_model_godot
-   ```
-3. Build the Godot Project.
-   ```powershell
-   godot-mono --build-solutions --quit
-   ```
-
-   This opens Godot, builds the project, and then quits the program automatically. 
-
-Note that the following errors will show up, but they should be ignored: 
-
-```powershell
-ERROR: Condition "f.is_null()" is true.
-   at: _save_to_cache (servers/rendering/renderer_rd/shader_rd.cpp:455)
-ERROR: Condition "f.is_null()" is true.
-   at: _save_to_cache (servers/rendering/renderer_rd/shader_rd.cpp:455)
-ERROR: Condition "f.is_null()" is true.
-   at: _save_to_cache (servers/rendering/renderer_rd/shader_rd.cpp:455)
-
-WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.
-   at: _editor_init (modules/gltf/register_types.cpp:73)
-ERROR: Condition "!EditorSettings::get_singleton() || !EditorSettings::get_singleton()->has_setting(p_setting)" is true. Returning: Variant()
-   at: _EDITOR_GET (editor/editor_settings.cpp:1127)
-```
-
-### Run the Godot Project
-
-```powershell
-godot-mono [password]
-```
+1. Open Godot
+2. Click Import (or press ```Ctrl+I```)
+3. Insert the project path and click "Import and Edit"
+4. Build and run the project by clicking on the "play" button in the top-right corner (or press ```F5```)
+5. Run ```python test_localhost.py``` found in the current folder.
 
 Contact Claudio claudio.gomes@ece.au.dk for the password to get access to RabbitMQ on AWS. No argument or wrong password will fail.

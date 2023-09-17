@@ -7,28 +7,38 @@ This repository shows an example of distributed co-simulation using the followin
 - [Godot](https://godotengine.org/): for visualization
 - [Maestro](https://github.com/INTO-CPS-Association/maestro): for co-simulation orchestration
 
+Slides giving an overview of each technology:
+- [Docker](slides/Docker_slides.pdf): for virtualization
+- [RabbitMQ](slides/FMICosim.pdf): for communication
+- [RabbitMQFMU](slides/RabbitMQ.pdf): bridge between RabbitMQ and co-simulation
+- [Godot](slides/Godot_slides.pdf): for visualization
+- [Maestro](slides/FMICosim.pdf): for co-simulation orchestration
+
 ## Instructions
 
 In the following instructions whenever we ask to run a particular command it means to open a terminal in the current folder and run the command.
 
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or equivalent for your platform.
-2. (Optional) If you do not wish to use the Rabbitmq server provided in [rabbitmqserver](rabbitmqserver), contact Claudio Gomes <claudio.gomes@ece.au.dk> for access to RabbitMQ on AWS.
-3. Open a terminal in the current folder and run the following to start all services: `docker-compose up`
+   Follow instructions in [Installing Docker For Windows](#installing-docker-for-windows)
+1. (Optional) If you do not wish to use the Rabbitmq server provided in [rabbitmqserver](rabbitmqserver), contact Claudio Gomes <claudio.gomes@ece.au.dk> for access to RabbitMQ on AWS.
+2. Open a terminal in the current folder and run the following to start all services: `docker-compose up`
 
    The first time this is run, docker will pull and build all the required Docker images.
    You can delete these images in your Docker desktop management interface later to recover disk space.
 
-4. Wait for all services to be up and running. You should be able to open the [rabbitmq server interface](http://localhost:15672/). 
+3. Wait for all services to be up and running. You should be able to open the [rabbitmq server interface](http://localhost:15672/). 
    - User: guest
    - Pass: guest
-5. Open another terminal and run the following to connect to the controller-container 
+4. Open another terminal and run the following to connect to the controller-container 
    1. `docker exec -it controller-container /bin/bash`
    2. `python3 control.py`
-6. (Optional) If you wish to visualize the 3D example, follow the [Godot instructions](mass_spring_model_godot/README.md) and run the [Godot project](mass_spring_model_godot/project.godot).
-7. Open another terminal and run the following to connect to the rabbitmqfmu-container
+5. (Optional) If you wish to visualize the 3D example, 
+   1. follow the [Godot instructions](mass_spring_model_godot/README.md) 
+   3. run the [Godot project](mass_spring_model_godot/project.godot).
+6. Open another terminal and run the following to connect to the rabbitmqfmu-container
    1. `docker exec -it rabbitmqfmu-container /bin/bash`
    2. `./run_cosim.sh`
-8. The co-simulation is now running and you should see the following outputs
+7. The co-simulation is now running and you should see the following outputs
    
    control.py:
    ```
@@ -73,9 +83,49 @@ In the following instructions whenever we ask to run a particular command it mea
    Opened channel with ID: 2Interpretation time: 11203646691 PT11.203621S
    ```
 
-9. Exit all the above terminals.
-10. Run `docker-compose down` -> Removes all containers
+8.  Exit all the above terminals.
+9.  Run `docker-compose down` -> Removes all containers
 
+
+## Installing Docker For Windows
+
+**Prerequisites:**
+- A 64-bit processor
+- 4GB RAM
+- Windows 10 Home/Pro or Windows 11 Home/Pro
+
+**Steps:**
+1. Install the [Docker Engine](https://docs.docker.com/desktop/install/windows-install/)
+2. Install the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install). To leverage applications based on Linux, the Docker engine needs to run on WSL. WSL lets Linux distributions run on Windows. 
+    1. Open Powershell or Windows Command Prompt in adminstrator mode
+    2. Run the command:  ``` wsl --install ```
+    3. Restart your machine.
+  
+If the above command does not work, go through the [manual installation of WSL](https://learn.microsoft.com/en-us/windows/wsl/install-manual).
+
+
+### Using Docker to run a co-simulation
+
+1. Open a Powershell or Terminal and move to the [maestro_stand_alone](./maestro_stand_alone) folder. You can change the directory using the ``` cd ``` command. 
+2. Build the docker image by running the command: ``` docker build -t maestro:latest . ```
+3. Go one folder back to the main folder: ``` cd .. ```
+4. Start the container: ``` docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash ```
+5. Then inside the container, run the following commands:
+   1. ``` java -jar maestro.jar sigver generate-algorithm scenario.conf -output results ```
+   2. ``` java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2 ```
+
+## Testing RabbitMQ Server
+
+This example is a simple demonstration of how RabbitMQ works. It consists of a receiver and a server that communicates with via the RabbitMQ message broker. 
+
+**How to run the example**
+1. Run the RabbitMQ server locally using Docker (see steps above)
+1. Run the receiver:
+   1. Open a terminal and move to the [rabbitmqserver](rabbitmqserver) folder where [Receiver.py](rabbitmqserver/Receiver.py) is located
+   2. Run the command: ```python Receiver.py``` 
+2. Run the sender:
+   1. Open a terminal move to the [rabbitmqserver](rabbitmqserver) folder where [Sender.py](rabbitmqserver/Sender.py) is located
+   2. Run the command: ```python Sender.py``` 
 
 
 ## Old Instructions - Kept for Troubleshooting

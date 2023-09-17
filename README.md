@@ -1,16 +1,34 @@
-Instructions Using Docker-Compose:
-1. Install Docker Desktop or equivalent for your platform.
-2. Contact Claudio <claudio.gomes@ece.au.dk> for access to rabbitqm on AWS. You will get a password.
-3. `docker-compose up` -> Starts all services
-   1. Wait for all services to be up and running.
-   2. Open terminal for controller-container: 
-      1. `docker exec -it controller-container /bin/bash`
-      2. `python3 control.py`
-   3. Open terminal for rabbitmqfmu-container
-      1. `docker exec -it rabbitmqfmu-container /bin/bash`
-      2. `./run_cosim.sh`
-   4. Exit all the above terminals.
-4. `docker-compose down` -> Removes all containers
+# Example Distributed Co-simulation
+
+This repository shows an example of distributed co-simulation using the following technologies:
+- [Docker](https://www.docker.com/): for virtualization
+- [RabbitMQ](https://www.rabbitmq.com/): for communication
+- [RabbitMQFMU](https://github.com/INTO-CPS-Association/fmu-rabbitmq): bridge between RabbitMQ and co-simulation
+- [Godot](https://godotengine.org/): for visualization
+- [Maestro](https://github.com/INTO-CPS-Association/maestro): for co-simulation orchestration
+
+## Instructions
+
+In the following instructions whenever we ask to run a particular command it means to open a terminal in the current folder and run the command.
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or equivalent for your platform.
+2. (Optional) If you do not wish to use the Rabbitmq server provided in [rabbitmqserver](rabbitmqserver), contact Claudio Gomes <claudio.gomes@ece.au.dk> for access to RabbitMQ on AWS.
+3. Open a terminal in the current folder and run the following to start all services: `docker-compose up`
+
+   The first time this is run, docker will pull and build all the required Docker images.
+   You can delete these images in your Docker desktop management interface later to recover disk space.
+
+4. Wait for all services to be up and running. You should be able to open the [rabbitmq server interface](http://localhost:15672/). 
+   - User: guest
+   - Pass: guest
+5. Open another terminal and run the following to connect to the controller-container 
+   1. `docker exec -it controller-container /bin/bash`
+   2. `python3 control.py`
+6. Open another terminal and run the following to connect to the rabbitmqfmu-container
+   1. `docker exec -it rabbitmqfmu-container /bin/bash`
+   2. `./run_cosim.sh`
+7. Exit all the above terminals.
+8.  `docker-compose down` -> Removes all containers
 
 
 Instructions that do not use Docker-Compose (useful for troubleshooting the virtual machines individually):

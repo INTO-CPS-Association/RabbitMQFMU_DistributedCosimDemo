@@ -15,17 +15,33 @@
     <DefaultExperiment startTime="0.0" stopTime="16.0" stepSize="0.01"/>
     <ModelVariables>
 
-        <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter" initial="exact">
+        <!-- Uncomment to use AWS rabbitmq server. Also change in resources folder. -->
+        <!-- <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter" initial="exact">
             <String start="b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com"/>
+        </ScalarVariable> -->
+        
+        <!-- Comment to use AWS rabbitmq server. Also change in resources folder. -->
+        <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter" initial="exact">
+            <String start="rabbitmq-container"/>
         </ScalarVariable>
+        
         <ScalarVariable name="config.port" valueReference="1" variability="fixed" causality="parameter" initial="exact">
             <Integer start="5671"/>
         </ScalarVariable>
-        <ScalarVariable name="config.username" valueReference="2" variability="fixed" causality="parameter" initial="exact">
+
+        <!-- Adjust the username and password according to server configuration -->
+        <!-- <ScalarVariable name="config.username" valueReference="2" variability="fixed" causality="parameter" initial="exact">
             <String start="distributed_cosim_demo"/>
         </ScalarVariable>
         <ScalarVariable name="config.password" valueReference="3" variability="fixed" causality="parameter" initial="exact">
             <String start="CONTACT_CLAUDIO"/>
+        </ScalarVariable> -->
+
+        <ScalarVariable name="config.username" valueReference="2" variability="fixed" causality="parameter" initial="exact">
+            <String start="guest"/>
+        </ScalarVariable>
+        <ScalarVariable name="config.password" valueReference="3" variability="fixed" causality="parameter" initial="exact">
+            <String start="guest"/>
         </ScalarVariable>
 
 
@@ -61,10 +77,14 @@
             <String start="msd"/>
         </ScalarVariable>
 
-
-        <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
+        <!-- Adjust to connect to AWS rabbitmq server -->
+        <!-- <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
             <Boolean start="true"/>
+        </ScalarVariable> -->
+        <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
+            <Boolean start="false"/>
         </ScalarVariable>
+        
         <ScalarVariable name="config.queueupperbound" valueReference="17" variability="fixed" causality="parameter" initial="exact">
             <Integer start="100"/>
         </ScalarVariable>

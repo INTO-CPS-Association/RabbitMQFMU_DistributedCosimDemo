@@ -26,7 +26,7 @@
         </ScalarVariable>
         
         <ScalarVariable name="config.port" valueReference="1" variability="fixed" causality="parameter" initial="exact">
-            <Integer start="5671"/>
+            <Integer start="5672"/>
         </ScalarVariable>
 
         <!-- Adjust the username and password according to server configuration -->

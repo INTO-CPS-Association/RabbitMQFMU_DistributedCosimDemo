@@ -26,7 +26,8 @@
         </ScalarVariable>
         
         <ScalarVariable name="config.port" valueReference="1" variability="fixed" causality="parameter" initial="exact">
-            <Integer start="5671"/>
+            <!-- 5672 for local server, 5671 for AWS -->
+            <Integer start="5672"/>
         </ScalarVariable>
 
         <!-- Adjust the username and password according to server configuration -->

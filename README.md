@@ -24,12 +24,58 @@ In the following instructions whenever we ask to run a particular command it mea
 5. Open another terminal and run the following to connect to the controller-container 
    1. `docker exec -it controller-container /bin/bash`
    2. `python3 control.py`
-6. Open another terminal and run the following to connect to the rabbitmqfmu-container
+6. (Optional) If you wish to visualize the 3D example, follow the [Godot instructions](mass_spring_model_godot/README.md) and start the [Godot project](mass_spring_model_godot/project.godot).
+7. Open another terminal and run the following to connect to the rabbitmqfmu-container
    1. `docker exec -it rabbitmqfmu-container /bin/bash`
    2. `./run_cosim.sh`
-7. Exit all the above terminals.
-8.  `docker-compose down` -> Removes all containers
+8. The co-simulation is now running and you should see the following outputs
+   
+   control.py:
+   ```
+   {'time': '2023-09-17T07:40:41.357+00:00', 'fk': 1.0}
+   [x] b'{"x":0.973394, "timestep":"2023-09-17T07:40:41.367+00:00", "simstep":"7510.000000"}'
+   2023-09-17T07:40:41.367+00:00
+   Sent:
+   {'time': '2023-09-17T07:40:41.367+00:00', 'fk': 1.0}
+   [x] b'{"x":0.973461, "timestep":"2023-09-17T07:40:41.378+00:00", "simstep":"7520.000000"}'
+   2023-09-17T07:40:41.378+00:00
+   Sent:
+   {'time': '2023-09-17T07:40:41.378+00:00', 'fk': 1.0}
+   [x] b'{"x":0.97353, "timestep":"2023-09-17T07:40:41.387+00:00", "simstep":"7530.000000"}'
+   2023-09-17T07:40:41.387+00:00
+   Sent:
+   {'time': '2023-09-17T07:40:41.387+00:00', 'fk': 1.0}
+   ```
 
+   run_cosim.sh
+   ```
+   WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
+   07:40:31.664 [main] WARN  org.intocps.maestro.framework.fmi2.api.mabl.FromMaBLToMaBLAPI - Failed to find instance required by relational information from simulation env. Missing 'm' in relation E c.fk -> [m.fk]
+   07:40:31.677 [main] WARN  org.intocps.maestro.framework.fmi2.api.mabl.FromMaBLToMaBLAPI - Failed to find instance required by relational information from simulation env. Missing 'c' in relation E m.x -> [c.x]
+   Interpretation load took: 490938090
+   Interpretation load took: 64083757
+   Model description path: /fmus/rmq_controller/rmqfmuv2.1.5/resources/modelDescription.xml
+   Interpretation instantiate took: 65231588
+   Interpretation instantiate took: 3199692
+
+   Opened channel with ID: 1
+   Declaring exchange on channel with ID: 1
+   Exchange name: example_exchange exchange type: direct
+
+   Opened channel with ID: 2
+   Opened channel with ID: 1
+   Declaring exchange on channel with ID: 1
+   Exchange name: example_exchange_sh exchange type: direct
+
+   Opened channel with ID: 2Interpretation time: 11203646691 PT11.203621S
+   ```
+
+9. Exit all the above terminals.
+10. Run `docker-compose down` -> Removes all containers
+
+
+
+## Old Instructions - Kept for Troubleshooting
 
 Instructions that do not use Docker-Compose (useful for troubleshooting the virtual machines individually):
 1. Install Docker Desktop or equivalent for your platform
@@ -44,13 +90,7 @@ Instructions that do not use Docker-Compose (useful for troubleshooting the virt
 4. Export FMUs for linux machines.
    1. Use [OpenModelica](https://openmodelica.org/download/download-linux/) from a linux machine, or use [Linux Subsystem for Windows](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps) 
    2. Open models and export them as FMUs.
-5. Run standalone cosim
-   1. CD to [maestro_stand_alone](./maestro_stand_alone)
-   2. `docker build -t maestro:latest .`
-   3. `cd ..`
-   4. Start container terminal: `docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash`
-   5. Then inside container terminal: `java -jar maestro.jar import Sg1 -output=results -v --interpret scenario.json`
-6. Run distributed scenario:
+5. Run distributed scenario:
    1. Make sure rabbitmq-server container is running (see previous step)
    2. Start controller python running in local machine.
       1. CD to [distributed_ctrl_python](./distributed_ctrl_python)
@@ -64,22 +104,23 @@ Instructions that do not use Docker-Compose (useful for troubleshooting the virt
          2. `java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2`
 
 
-Troubleshooting rabbitmqfmu missing dependencies:
+### Troubleshooting rabbitmqfmu missing dependencies
+
 - `wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu66_66.1-2ubuntu2_amd64.deb`
 - `dpkg -i libicu66_66.1-2ubuntu2_amd64.deb`
 - https://stackoverflow.com/questions/72133316/libssl-so-1-1-cannot-open-shared-object-file-no-such-file-or-directory
 - Add missing parameters in modeldescription
-      """
-      <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
-         <Boolean start="true"/>
-      </ScalarVariable>
-      <ScalarVariable name="config.queueupperbound" valueReference="17" variability="fixed" causality="parameter" initial="exact">
-         <Integer start="100"/>
-      </ScalarVariable>
-      """
-- Why do we need two model description files?
+   ```
+   <ScalarVariable name="config.ssl" valueReference="16" variability="fixed" causality="parameter" initial="exact">
+      <Boolean start="true"/>
+   </ScalarVariable>
+   <ScalarVariable name="config.queueupperbound" valueReference="17" variability="fixed" causality="parameter" initial="exact">
+      <Integer start="100"/>
+   </ScalarVariable>
+   ```
 
-Other commands for testing containers
+### Other commands for testing containers
+
 - `docker network ls`
 - `docker container run --rm --name ping --network=examplenetwork -it myubuntu /bin/bash`
 - `docker container run --rm --name consume --network=examplenetwork -v $pwd\aux_scripts:/aux_scripts -w /aux_scripts -it myubuntu /bin/bash`

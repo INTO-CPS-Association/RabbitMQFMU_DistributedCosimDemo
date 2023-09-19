@@ -7,7 +7,7 @@ ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 
 
 #UNCOMMENT FOR CONNECTING TO AMAZON MQ
-#url = f"amqps://distributed_cosim_demo:CONTACT_CLAUDIO@b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com:5671"
+#url = f"amqps://distributed_cosim_demo:CONTACT_CLAUDIO@CONTACT_CLAUDIO:5671"
 #parameters = pika.URLParameters(url)
 #parameters.ssl_options = pika.SSLOptions(context=ssl_context) #Uncomment for connecting to server
 

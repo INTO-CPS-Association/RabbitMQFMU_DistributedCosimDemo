@@ -67,7 +67,7 @@ public partial class RabbitMQConnection : Node3D
 				UserName = "distributed_cosim_demo",
 				Password = password,
 				Port = 5671,
-				Uri = new Uri("amqps://b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com")
+				Uri = new Uri("amqps://CONTACT_CLAUDIO")
 			};
 		}
 		

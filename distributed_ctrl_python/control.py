@@ -16,7 +16,7 @@ if not local_rabbitmq_server:
 
 url = f"amqp://guest:guest@rabbitmq-container"
 if not local_rabbitmq_server:
-  url = f"amqps://distributed_cosim_demo:CONTACT_CLAUDIO@b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com:5671"
+  url = f"amqps://distributed_cosim_demo:CONTACT_CLAUDIO@CONTACT_CLAUDIO:5671"
 
 parameters = pika.URLParameters(url)
 if ssl_context is not None:

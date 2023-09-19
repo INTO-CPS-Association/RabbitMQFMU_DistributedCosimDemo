@@ -17,7 +17,7 @@
 
         <!-- Uncomment to use AWS rabbitmq server. Also change in resources folder. -->
         <!-- <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter" initial="exact">
-            <String start="b-14c95d1b-b988-4039-a4fe-b5c6744b8a97.mq.eu-north-1.amazonaws.com"/>
+            <String start="CONTACT_CLAUDIO"/>
         </ScalarVariable> -->
         
         <!-- Comment to use AWS rabbitmq server. Also change in resources folder. -->

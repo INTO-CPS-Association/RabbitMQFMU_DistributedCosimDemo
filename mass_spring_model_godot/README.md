@@ -7,10 +7,10 @@
 
 1. Install [.NET SDK](https://dotnet.microsoft.com/en-us/download).
 2. Install [Godot 4 Engine - .NET](https://godotengine.org/download/windows/), which supports C#.
-3. Open a PowerShell terminal.
+3. Open a PowerShell terminal. 
 4. Install the RabbitMQ library for C#. 
    ```powershell
-   dotnet add package RabbitMQ.Client
+   C:\path\to\your\godot\project dotnet add package RabbitMQ.Client
    ```
 5. Install Scoop for CLI.
    

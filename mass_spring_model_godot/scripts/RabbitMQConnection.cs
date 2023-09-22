@@ -3,7 +3,6 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
-using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
 
@@ -20,8 +19,9 @@ public class RabbitMQMessage {
 /// Class for connecting to RabbitMQ server and receiving messages
 public partial class RabbitMQConnection : Node3D
 {
-	// SSL Context for TLS configuration of Amazon MQ for RabbitMQ
-	private ConnectionFactory factory;
+    private ConnectionFactory factory = new ConnectionFactory() {
+        Uri = new Uri("amqp://guest:guest@localhost:5672/")
+    };
 	private IConnection connection;
 	private IModel channel;
 
@@ -40,47 +40,10 @@ public partial class RabbitMQConnection : Node3D
 	/// Creates a connection to server. Creates an exchange and queue, binds them, and calls ReceiveMessage()
 	/// </summary>
 	public override void _Ready() {
-		string[] args = OS.GetCmdlineArgs();
+		connection = factory.CreateConnection();
+		channel = connection.CreateModel();
+		GD.Print("Connection created");
 		
-		var useLocalRabbitMq = true;
-		var password = "guest";
-		
-		// Get password from command line argument
-		//if (args.Length == 1) {
-		//	password = args[0];
-		//	useLocalRabbitMq = false;
-		//}
-		
-		if (useLocalRabbitMq) {
-			factory = new ConnectionFactory() {
-				UserName = "guest",
-				Password = password,
-				Port = 5672,
-				Uri = new Uri("amqp://localhost")
-			};
-		} else {
-			factory = new ConnectionFactory() {   
-				Ssl = new SslOption() { 
-					Enabled = true,
-					Version = SslProtocols.Tls12,
-				},
-				UserName = "distributed_cosim_demo",
-				Password = password,
-				Port = 5671,
-				Uri = new Uri("amqps://CONTACT_CLAUDIO")
-			};
-		}
-		
-		try {
-			connection = factory.CreateConnection();
-			channel = connection.CreateModel();
-			GD.Print("Connection created");
-		}
-		catch (Exception e) {
-			GetTree().Quit();
-			throw e;
-		}
-
 		localQueue = channel.QueueDeclare(autoDelete: true, exclusive: true);
 		channel.QueueBind(queue: localQueue, exchange: exchangeName, routingKey: bindingKey);
 		msgLabel = GetNode<RichTextLabel>("msgLabel");

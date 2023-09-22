@@ -30,7 +30,7 @@
    ```
    If the command fails, try:
      ```powershell
-     scoop bucket add extra
+     scoop bucket add extras
      ```
      This will install extra buckets, which is a collection of apps. 
      Then try installing `godot-mono` again.

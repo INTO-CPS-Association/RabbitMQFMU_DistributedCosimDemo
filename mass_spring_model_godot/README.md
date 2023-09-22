@@ -4,7 +4,9 @@
 
 
 ### Steps: 
+There are two alternative ways to run the Godot project which is by using the Godot User Interface (UI) or using the Command-Line interface (CLI).
 
+Only do steps 1-4 if you want to use the UI. Continue with all steps, if you want to use the CLI.
 1. Install [.NET SDK](https://dotnet.microsoft.com/en-us/download).
 2. Install [Godot 4 Engine - .NET](https://godotengine.org/download/windows/), which supports C#.
 3. Open a PowerShell terminal. 

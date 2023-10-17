@@ -110,9 +110,8 @@ If the above command does not work, go through the [manual installation of WSL](
 2. Build the docker image by running the command: ``` docker build -t maestro:latest . ```
 3. Go one folder back to the main folder: ``` cd .. ```
 4. Start the container: ``` docker container run --rm --name maestro-container -v ${pwd}\maestro_stand_alone:/maestro_stand_alone -v ${pwd}\fmus:/fmus -w /maestro_stand_alone -it maestro:latest /bin/bash ```
-5. Then inside the container, run the following commands:
-   1. ``` java -jar maestro.jar sigver generate-algorithm scenario.conf -output results ```
-   2. ``` java -jar maestro.jar sigver execute-algorithm -mm multiModel.json -ep executionParameters.json -al results/masterModel.conf -output results -di -vim FMI2 ```
+5. Then inside the container, run the following:
+   1. ``` ./run_cosim.sh ```
 
 ## Testing RabbitMQ Server
 

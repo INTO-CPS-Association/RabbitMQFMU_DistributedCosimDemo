@@ -9,8 +9,8 @@ This repository shows an example of distributed co-simulation using the followin
 
 Slides giving an overview of each technology:
 - [Docker](slides/Docker_slides.pdf): for virtualization
-- [RabbitMQ](slides/FMICosim.pdf): for communication
-- [RabbitMQFMU](slides/RabbitMQ.pdf): bridge between RabbitMQ and co-simulation
+- [FMI and Co-simulation](slides/FMICosim.pdf): for communication
+- [RabbitMQ](slides/RabbitMQ.pdf): bridge between RabbitMQ and co-simulation
 - [Godot](slides/Godot_slides.pdf): for visualization
 - [Maestro](slides/FMICosim.pdf): for co-simulation orchestration
 

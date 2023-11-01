@@ -11,6 +11,7 @@ Slides giving an overview of each technology:
 - [Docker](slides/Docker_slides.pdf): for virtualization
 - [FMI and Co-simulation](slides/FMICosim.pdf): for communication
 - [RabbitMQ](slides/RabbitMQ.pdf): bridge between RabbitMQ and co-simulation
+- [Influx DB](slides/Influx&DB_slides.pdf): Time series database.
 - [Godot](slides/Godot_slides.pdf): for visualization
 - [Maestro](slides/FMICosim.pdf): for co-simulation orchestration
 

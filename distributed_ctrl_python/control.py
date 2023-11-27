@@ -8,7 +8,7 @@ import ssl
 import pika
 
 local_rabbitmq_server = True # set False to connect to AWS rabbitmq server
-
+print("Connecting to RabbitMQ...")
 ssl_context = None
 if not local_rabbitmq_server:
   ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -23,6 +23,8 @@ if ssl_context is not None:
   parameters.ssl_options = pika.SSLOptions(context=ssl_context)
 
 connection = pika.BlockingConnection(parameters)
+print("Connected to RabbitMQ!")
+
 channel = connection.channel()
 
 print("Declaring exchange")

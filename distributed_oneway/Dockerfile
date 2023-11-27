@@ -9,4 +9,6 @@ RUN echo "deb http://security.ubuntu.com/ubuntu focal-security main" | tee --app
 
 RUN apt-get update && apt-get install -y libicu66 libssl1.1 
 
-CMD tail -F anything
+CMD tail -F anything 
+
+#run_cosim.sh instead of cmd 

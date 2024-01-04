@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "096ipaulhS85PdWHIvYGWALhdKTC5+6kzYfRIham/Hi2rGj3QbCxC5yeHcwWvVWZTOFciJPdCsculmD4p3DPZQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\emilh\\Documents\\INTO-CPS\\DLTE\\RabbitMQFMU_DistributedCosimDemo\\c-sharp_examples\\webapi_example\\webapi_example.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\emilh\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

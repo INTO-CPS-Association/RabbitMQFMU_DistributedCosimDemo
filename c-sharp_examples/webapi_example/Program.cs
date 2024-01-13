@@ -5,11 +5,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
+using System.Net.WebSockets;
+using System.Text;
 using System.Diagnostics;
 
 class Program
 {
     static readonly HttpClient client = new HttpClient();
+    static readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
 
     static async Task Main(string[] args)
     {
@@ -19,6 +23,8 @@ class Program
             string baseUrl = "http://localhost";
             int port = 8082;
             client.BaseAddress = new Uri($"{baseUrl}:{port}");
+            int delayMilliseconds = 0; // 1 second delay
+
 
 
             //STEP 1: Start COE
@@ -48,6 +54,9 @@ class Program
             }
 
             Console.WriteLine("Session initialized successfully.");
+
+            //STEP 3.1: Connect to WebSocket and livestream data
+            Task webSocketTask = ConnectToWebSocketAndStreamData(sessionId, port, delayMilliseconds);
 
 
             //STEP 4: Run simulation
@@ -87,7 +96,7 @@ class Program
             Console.WriteLine("Session destroyed successfully.");
             coeProcess.WaitForExit();
         }
-
+    
         catch (Exception ex)
         {
             Console.WriteLine("Error: " + ex.Message);
@@ -184,17 +193,64 @@ class Program
 
 
     //Delete session
-        static async Task<bool> DestroySession(string sessionId)
-    {
-        HttpResponseMessage response = await client.GetAsync($"/destroy/{sessionId}");
-        if (!response.IsSuccessStatusCode)
+            static async Task<bool> DestroySession(string sessionId)
         {
-            return false;
+            HttpResponseMessage response = await client.GetAsync($"/destroy/{sessionId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            Console.WriteLine($"Destroy response code '{response.StatusCode}'");
+            return true;
         }
 
-        Console.WriteLine($"Destroy response code '{response.StatusCode}'");
-        return true;
+    // Connect to WebSocket and livestream data
+    static async Task ConnectToWebSocketAndStreamData(string sessionId, int port, int delayMilliseconds)
+    {
+        using (ClientWebSocket webSocket = new ClientWebSocket())
+        {
+            Uri serverUri = new Uri($"ws://localhost:{port}/attachSession/{sessionId}");
+            await webSocket.ConnectAsync(serverUri, CancellationToken.None);
+            Console.WriteLine("Connected to WebSocket.");
+
+            ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[2048]);
+            while (webSocket.State == WebSocketState.Open)
+            {
+                WebSocketReceiveResult result;
+                using (var ms = new MemoryStream())
+                {
+                    do
+                    {
+                        result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+                        ms.Write(buffer.Array, buffer.Offset, result.Count);
+                    }
+                    while (!result.EndOfMessage);
+
+                    ms.Seek(0, SeekOrigin.Begin);
+                    if (result.MessageType == WebSocketMessageType.Text)
+                    {
+                        using (var reader = new StreamReader(ms, Encoding.UTF8))
+                        {
+                            string message = await reader.ReadToEndAsync();
+                            Console.WriteLine("Received message: " + message);
+                        }
+                    }
+                }
+
+                 // Introduce a delay
+                await Task.Delay(delayMilliseconds);
+            }
+        }
     }
 }
 
 
+
+
+/*NOTES:
+- Multiple livestreamed data variables (Done)
+- Livestreamed data is not equal to results.csv file  
+- Speed in which data is streamed?
+- Visualize livestreamed data differently? 
+*/

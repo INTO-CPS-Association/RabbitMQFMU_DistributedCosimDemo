@@ -32,7 +32,13 @@
         "size":0.001
     },
     "loggingOn":false,
-    "overrideLogLevel":"INFO"
+    "overrideLogLevel":"INFO",
+    "livestream":{
+        "{msd1}.msd1i ":["x1"],
+        "{msd1}.msd1i":["v1"],
+        "{msd2}.msd2i":["fk"]
+    }
 }
+
 
 

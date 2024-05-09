@@ -35,22 +35,28 @@ channel.queue_bind(exchange='example_exchange', queue=queue_name,
 
 print(' [*] Waiting for logs. To exit press CTRL+C: ')
 
+utc_delta = datetime.timedelta(hours=2) 
+dk_tz = datetime.timezone(utc_delta, name="UTC")
+time_0 = dt.now(tz = dk_tz)
+
 def control_loop(ch, method, properties, body):
+  global time_0
   print(" [x] %r" % body)
 
   msg_in = json.loads(body)
 
-  utc_delta = datetime.timedelta(hours=0)
-  utc_tz = datetime.timezone(utc_delta,
-                                  name="UTC")
-
   msg = {}
-  msg['time'] = dt.now(tz = utc_tz).isoformat(timespec='milliseconds')
-  msg['fk'] = 1.0
 
-  if "timestep" in msg_in:
-    msg['time'] = msg_in["timestep"]
-    print(msg_in["timestep"])
+  if "internal_status" in msg_in:
+    time_0 = dt.now(tz = dk_tz)
+    msg['time'] = time_0.isoformat(timespec='milliseconds')
+    msg['fk'] = 0.0
+  else:
+    assert "simstep" in msg_in
+    msg['time'] = (time_0 + datetime.timedelta(milliseconds=float(msg_in["simstep"]))).isoformat(timespec='milliseconds')
+    print(msg_in["simstep"])
+  
+  msg['fk'] = 1.0
 
   if "simstep" in msg_in:
     simstep = float(msg_in["simstep"])
@@ -63,7 +69,7 @@ def control_loop(ch, method, properties, body):
       msg['fk'] = 0.5
     elif simstep < 40000:
       msg['fk'] = 1.0
-  
+
   channel.basic_publish(exchange='example_exchange', routing_key='controller', body=json.dumps(msg))
   print("Sent:")
   print(msg)

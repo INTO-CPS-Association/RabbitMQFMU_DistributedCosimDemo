@@ -15,14 +15,14 @@
     "logVariables": {},
     "algorithm":{
         "type":"fixed-step",
-        "size":0.01
+        "size":0.001
     },
     "loggingOn": true,
-    "overrideLogLevel": "DEBUG",
+    "overrideLogLevel": "TRACE",
     "convergenceRelativeTolerance": 0.01,
     "convergenceAbsoluteTolerance": 0.0,
     "convergenceAttempts": 5,
     "startTime": 0.0,
-    "endTime": 10.0,
+    "endTime": 1.0,
     "simulationProgramDelay": true
 }
